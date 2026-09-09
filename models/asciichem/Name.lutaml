@@ -1,0 +1,15 @@
+class Name {
+  definition {
+    A molecule name. Maps to CML name; convention distinguishes
+    IUPAC, CAS, trivial, and trade names.
+  }
+  +content: String {
+    definition { The name text. }
+  }
+  +convention: String {
+    definition { Naming convention, e.g. "iupac" or "cas". }
+  }
+  +dictRef: String {
+    definition { Optional dictionary reference for CML round-trip. }
+  }
+}

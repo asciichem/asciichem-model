@@ -1,0 +1,35 @@
+class ElectronConfiguration {
+  definition {
+    Orbital occupancy (1s^2 2s^2 2p^6) with an optional atomic term
+    symbol (^{multiplicity}L_J).
+  }
+  +orbitals: OrbitalOccupancy[0..*] {
+    definition { Ordered orbital occupancies. }
+  }
+  +termSymbol: TermSymbol {
+    definition { Optional atomic term symbol. }
+  }
+
+  class OrbitalOccupancy {
+    definition { One orbital and its electron count. }
+    +orbital: String {
+      definition { Orbital label, e.g. "1s", "2p". }
+    }
+    +occupancy: String {
+      definition { Electron count in this orbital. }
+    }
+  }
+
+  class TermSymbol {
+    definition { Atomic term symbol: spin multiplicity, letter, J. }
+    +multiplicity: String {
+      definition { Spin multiplicity (2S+1). }
+    }
+    +letter: String {
+      definition { Orbital angular momentum letter (S, P, D, ...). }
+    }
+    +jValue: String {
+      definition { Total angular momentum J. }
+    }
+  }
+}

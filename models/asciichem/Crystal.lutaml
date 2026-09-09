@@ -1,0 +1,34 @@
+class Crystal {
+  definition {
+    A crystallographic cell: unit-cell constants, space group, and
+    the asymmetric-unit atoms (fractional coordinates ride on the
+    atoms' coordinate annotations).
+  }
+  +name: String {
+    definition { Mineral or compound name. }
+  }
+  +a: Real {
+    definition { Cell length a in Angstrom. }
+  }
+  +b: Real {
+    definition { Cell length b. }
+  }
+  +c: Real {
+    definition { Cell length c. }
+  }
+  +alpha: Real {
+    definition { Cell angle alpha in degrees. }
+  }
+  +beta: Real {
+    definition { Cell angle beta. }
+  }
+  +gamma: Real {
+    definition { Cell angle gamma. }
+  }
+  +spacegroup: String {
+    definition { Hermann-Mauguin symbol, e.g. "Fm-3m". }
+  }
+  +atoms: Atom[0..*] {
+    definition { Asymmetric-unit atoms. }
+  }
+}

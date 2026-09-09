@@ -1,0 +1,31 @@
+class Spectrum {
+  definition {
+    A spectroscopy record: technique, acquisition parameters, and
+    peaks.
+  }
+  +technique: String {
+    definition { Technique type, e.g. "nmr", "ir", "mass". }
+  }
+  +params: String[0..*] {
+    definition { Acquisition parameters keyed by name (solvent, frequency, ...). }
+  }
+  +peaks: Peak[0..*] {
+    definition { The spectrum's peaks. }
+  }
+
+  class Peak {
+    definition { One spectroscopic peak. }
+    +position: String {
+      definition { Peak position (ppm, cm^-1, m/z, ...). }
+    }
+    +intensity: String {
+      definition { Relative intensity. }
+    }
+    +multiplicity: String {
+      definition { Splitting pattern (s, d, t, q, m). }
+    }
+    +assignment: String {
+      definition { Structural assignment of the peak. }
+    }
+  }
+}

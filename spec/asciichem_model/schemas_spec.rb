@@ -57,9 +57,10 @@ RSpec.describe "asciichem-model schemas" do
   end
 
   it "lutaml definitions exist for every shipped schema" do
+    exceptions = { "zmatrix" => "ZMatrix" }.freeze
     schema_files.each do |path|
       name = File.basename(path, ".yaml")
-      camel = name.split("-").map(&:capitalize).join
+      camel = exceptions.fetch(name) { name.split("-").map(&:capitalize).join }
       lutaml = File.join(AsciiChemModel.root, "models", "asciichem", "#{camel}.lutaml")
       expect(File.exist?(lutaml)).to be(true), "missing #{lutaml}"
     end

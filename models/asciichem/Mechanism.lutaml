@@ -1,0 +1,22 @@
+class Mechanism {
+  definition {
+    A reaction mechanism: labelled reaction steps plus spectator
+    species that are present but not transformed.
+  }
+  +steps: MechanismStep[0..*] {
+    definition { The mechanism steps in order. }
+  }
+  +spectators: Molecule[0..*] {
+    definition { Species present but not transformed. }
+  }
+
+  class MechanismStep {
+    definition { One labelled step of the mechanism. }
+    +label: String {
+      definition { Step label, e.g. "initiation". }
+    }
+    +reaction: Reaction {
+      definition { The step's reaction. }
+    }
+  }
+}
