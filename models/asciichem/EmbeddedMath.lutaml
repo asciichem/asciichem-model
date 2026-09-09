@@ -1,0 +1,10 @@
+class EmbeddedMath {
+  definition {
+    Math embedded in chemistry (backtick syntax). The wire form
+    carries the AsciiMath source; the parsed formula is an
+    implementation detail.
+  }
+  +source: String {
+    definition { The backticked AsciiMath source text. }
+  }
+}

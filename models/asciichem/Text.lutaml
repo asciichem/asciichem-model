@@ -1,0 +1,9 @@
+class Text {
+  definition {
+    Free-form text in double quotes. Unquoted prose is a parse error
+    by design.
+  }
+  +content: String {
+    definition { The text content without the quote delimiters. }
+  }
+}

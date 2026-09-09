@@ -1,0 +1,34 @@
+class Calculation {
+  definition {
+    A computational-chemistry result: method, basis set, and
+    computed properties.
+  }
+  +method: String {
+    definition { The computational method, e.g. "B3LYP". }
+  }
+  +basis: String {
+    definition { The basis set, e.g. "6-31G(d)". }
+  }
+  +properties: CalculatedProperty[0..*] {
+    definition { The computed properties. }
+  }
+
+  class CalculatedProperty {
+    definition { One computed property with units and provenance keys. }
+    +title: String {
+      definition { Property name, e.g. "dipole". }
+    }
+    +value: String {
+      definition { The computed value. }
+    }
+    +units: String {
+      definition { Units of the value. }
+    }
+    +dictRef: String {
+      definition { Optional dictionary reference. }
+    }
+    +convention: String {
+      definition { Optional convention marker. }
+    }
+  }
+}

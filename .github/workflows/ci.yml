@@ -19,3 +19,5 @@ jobs:
           bundler-cache: true
       - name: Run specs
         run: bundle exec rspec --format progress
+      - name: Check generated types are fresh
+        run: bundle exec rake generate:types:check

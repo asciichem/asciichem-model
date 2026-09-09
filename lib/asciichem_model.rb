@@ -8,6 +8,8 @@
 # tracked in the ecosystem TODO.impl (32).
 module AsciiChemModel
   autoload :VERSION, "asciichem_model/version"
+  autoload :SchemaTypeGenerator, "asciichem_model/schema_type_generator"
+  autoload :Validators, "asciichem_model/validators"
 
   # Root path of the gem (schemas/, models/, examples/ live here).
   def self.root
