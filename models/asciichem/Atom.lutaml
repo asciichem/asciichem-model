@@ -1,0 +1,29 @@
+class Atom {
+  definition {
+    A chemical atom: an element symbol with optional isotope (prefix
+    superscript), optional charge, optional subscript multiplicity,
+    and optional annotations. The defining semantic fix over AsciiMath:
+    a prefix superscript binds to the atom (`^14C` is
+    Atom(element: "C", isotope: "14")), never to a phantom carrier.
+  }
+  +element: String {
+    definition {
+      Element symbol from the periodic table (e.g. "C", "Cl").
+    }
+  }
+  +isotope: String {
+    definition {
+      Isotope mass number bound to this atom (e.g. "14" in `^14C`).
+    }
+  }
+  +charge: String {
+    definition {
+      Charge annotation (e.g. "2+" in `Ca^2+`).
+    }
+  }
+  +subscript: String {
+    definition {
+      Subscript multiplicity (e.g. "2" in `H_2O`).
+    }
+  }
+}

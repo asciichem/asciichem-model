@@ -1,0 +1,25 @@
+class Molecule {
+  definition {
+    An ordered sequence of atoms/groups with optional stoichiometric
+    coefficient, optional stereochemistry marker, and optional
+    names/identifiers/properties/metadata attached as CML-level
+    annotations. Substance identity lives here via Identifier
+    instances.
+  }
+  +nodes: Atom[0..*] {
+    definition {
+      Ordered child nodes (atoms, groups, nested molecules).
+    }
+  }
+  +coefficient: String {
+    definition {
+      Stoichiometric coefficient (e.g. "2" in `2H_2O`).
+    }
+  }
+  +identifiers: Identifier[0..*] {
+    definition {
+      Substance identifiers attached to this molecule (CAS RN, InChI,
+      SMILES, ...), each with a convention.
+    }
+  }
+}

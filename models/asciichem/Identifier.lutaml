@@ -1,0 +1,56 @@
+class Identifier {
+  definition {
+    A substance identifier: a value plus the convention that
+    determines its format (CAS RN with check digit, InChI, InChIKey
+    14-10-1 blocks, SMILES, IUPAC name, PubChem CID, ChEBI).
+    Maps to CML `<identifier convention="...">`. Format constraints
+    are enforced offline by the implementations' identifier
+    validators; assignment checking is resolution, not modelling.
+  }
+  +value: String {
+    definition {
+      The identifier value (e.g. "50-78-2").
+    }
+  }
+  +convention: IdentifierConvention {
+    definition {
+      The identifier convention registry value.
+    }
+  }
+  +dictRef: String {
+    definition {
+      Optional dictionary reference for CML round-trip.
+    }
+  }
+}
+
+enum IdentifierConvention {
+  definition {
+    Registry of known identifier conventions. Adding a convention is
+    a MINOR model bump; format validators are per-implementation.
+  }
+  cas {
+    definition { CAS Registry Number, DDDDDDD-DD-D with check digit. }
+  }
+  inchi {
+    definition { IUPAC International Chemical Identifier. }
+  }
+  inchikey {
+    definition { Hashed InChI key, 14-10-1 uppercase blocks. }
+  }
+  smiles {
+    definition { SMILES structure string. }
+  }
+  canonical-smiles {
+    definition { Canonical SMILES from a specific toolchain. }
+  }
+  iupac-name {
+    definition { Systematic IUPAC name. }
+  }
+  pubchem-cid {
+    definition { PubChem Compound ID. }
+  }
+  chebi {
+    definition { ChEBI ontology identifier. }
+  }
+}

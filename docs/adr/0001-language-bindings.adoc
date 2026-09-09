@@ -1,0 +1,78 @@
+= ADR-0001: Language-binding strategy
+
+Date: 2026-09-09
+Status: Accepted
+
+== Context
+
+AsciiChem needs TypeScript and Python APIs in addition to the Ruby
+reference implementation. Wrapping the Ruby gem (shelling out,
+transpiling) is a non-option: the gem is the reference implementation,
+not a runtime dependency for other ecosystems. Two viable shapes:
+
+*A — Per-language implementations against the shared model + corpus*
+(the CommonMark pattern):: Each language implements the parser, model,
+and formatters natively, conforming to `asciichem-model` schemas and
+passing the `asciichem-tests` corpus.
+
+*B — One Rust core, generated/FFI bindings per language* (the tiktoken
+/ fastembed pattern):: Parser + model + formatters live in Rust; Ruby
+uses rb-sys/magnus, Python PyO3/maturin, TypeScript napi-rs, the
+browser wasm-bindgen.
+
+== Analysis
+
+[cols="1,2,2",options="header"]
+|===
+|Dimension |A — per-language |B — Rust core
+
+|Parity risk
+|Real; mitigated by the corpus, needs discipline
+|Minimal — one implementation
+
+|Effort
+|~2× parser work (TS, PY); Ruby untouched
+|1× Rust rewrite + 3 bindings + native CI matrix; would eventually replace the parslet *reference* parser
+
+|Ruby story
+|None required
+|Large, risky migration of the reference implementation
+
+|Deployment
+|Pure-language packages
+|Native artifacts per platform/arch; compiled gem extension
+
+|Performance
+|Fine at document scale (parslet is not fast and it does not matter)
+|Better, but performance is not a requirement
+
+|Browser
+|TS API suffices for text/MathML
+|WASM enables client-side structural SVG later
+|===
+
+== Decision
+
+**A now; B deferred with explicit triggers.** Ship TypeScript and
+Python as native implementations conforming to the shared model and
+corpus. The single-parser invariant ("the site never reimplements the
+parser") evolves into a *single-contract* rule: every implementation
+passes the same corpus, verified in CI via each implementation's
+`conformance.json` (implementation, version, corpus version, per-level
+pass/total).
+
+Revisit (and only then activate the parked `11-rust-core.md` plan)
+when any of:
+
+. Performance becomes a stated requirement.
+. A third or fourth language lands and per-language drift cost exceeds
+  one Rust rewrite plus bindings.
+. Client-side WASM needs exceed what the TS API provides (e.g.
+  structural SVG in the playground).
+
+== Consequences
+
+- `asciichem-model` and `asciichem-tests` are load-bearing: conformance
+  claims are only as strong as the corpus.
+- The TS/PY scaffolds (TODO.impl 46/47) proceed under strategy A.
+- No Rust work starts as a side effect of any other TODO.
