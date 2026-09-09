@@ -1,0 +1,52 @@
+class SubstanceRecord {
+  definition {
+    The resolved view of a substance produced by a resolver source,
+    shaped after the CAS Common Chemistry detail payload so resolver
+    output maps onto it 1:1. Every identifier and property carries
+    its own provenance.
+  }
+  +preferredName: String {
+    definition { The source's preferred chemical name. }
+  }
+  +synonyms: String[0..*] {
+    definition { Systematic, common, and trade names. }
+  }
+  +formula: String {
+    definition { Molecular formula as stated by the source. }
+  }
+  +molecularWeight: Real {
+    definition { Molecular weight in g/mol as stated by the source. }
+  }
+  +identifiers: ProvenancedIdentifier[1..*] {
+    definition { The substance's identifiers, each with provenance. }
+  }
+  +properties: ProvenancedProperty[0..*] {
+    definition { Physical properties, each with provenance. }
+  }
+}
+
+class ProvenancedIdentifier {
+  definition { An identifier together with where it came from. }
+  +identifier: Identifier {
+    definition { The identifier value and convention. }
+  }
+  +provenance: Provenance {
+    definition { The source that asserted this identifier. }
+  }
+}
+
+class ProvenancedProperty {
+  definition { A named physical property with units and provenance. }
+  +name: String {
+    definition { e.g. "boiling point", "melting point", "density". }
+  }
+  +value: String {
+    definition { The property value as stated by the source. }
+  }
+  +units: String {
+    definition { Units of the value, when stated. }
+  }
+  +provenance: Provenance {
+    definition { The source that asserted this property. }
+  }
+}

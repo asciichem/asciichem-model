@@ -1,0 +1,22 @@
+class Group {
+  definition {
+    A bracketed sub-formula whose optional multiplier applies to the
+    whole group, e.g. (OH)_2.
+  }
+  +nodes: Node[1..*] {
+    definition { Atoms, nested molecules, or nested groups. }
+  }
+  +multiplicity: String {
+    definition { Multiplier applied to the group ("2"). }
+  }
+  +bracket: BracketKind {
+    definition { The bracket style enclosing the group. }
+  }
+}
+
+enum BracketKind {
+  definition { Bracket kinds, one per AsciiChem spelling. }
+  paren { definition { Round brackets: (OH)_2 — the default. } }
+  square { definition { Square brackets: [OH]_2. } }
+  brace { definition { Braces: {OH}_2. } }
+}

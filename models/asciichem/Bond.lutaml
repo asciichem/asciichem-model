@@ -1,0 +1,24 @@
+class Bond {
+  definition {
+    A bond between adjacent atoms in a linear structure. The kind
+    enum is the single source of truth shared by all implementations.
+  }
+  +kind: BondKind {
+    definition { The bond kind; single by default. }
+  }
+}
+
+enum BondKind {
+  definition {
+    single (-), double (=), triple (#), quadruple (##), wedge (>-),
+    hash (-<), dative (~>), wavy (~~).
+  }
+  single {}
+  double {}
+  triple {}
+  quadruple {}
+  wedge {}
+  hash {}
+  dative {}
+  wavy {}
+}

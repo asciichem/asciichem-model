@@ -1,0 +1,20 @@
+class Provenance {
+  definition {
+    Where a piece of identity data came from: the asserting source,
+    retrieval timestamp, source version, and the attribution line
+    that licence terms (e.g. CAS Common Chemistry CC BY-NC 4.0)
+    require on every cached record.
+  }
+  +source: String {
+    definition { Source adapter name, e.g. "pubchem" or "commonchemistry". }
+  }
+  +retrievedAt: DateTime {
+    definition { When the value was retrieved from the source. }
+  }
+  +sourceVersion: String {
+    definition { Source release, or an accessed-date pin when versionless. }
+  }
+  +attribution: String {
+    definition { Attribution string emitted with NC-licensed data. }
+  }
+}

@@ -1,0 +1,36 @@
+class Reaction {
+  definition {
+    A chemical reaction: reactants, an arrow with optional
+    conditions above/below it, and products.
+  }
+  +reactants: Molecule[0..*] {
+    definition { The left-hand side molecules. }
+  }
+  +products: Molecule[0..*] {
+    definition { The right-hand side molecules. }
+  }
+  +arrow: ArrowKind {
+    definition { The reaction arrow kind; forward by default. }
+  }
+  +conditions: ReactionConditions {
+    definition { Free text above/below the arrow. }
+  }
+}
+
+enum ArrowKind {
+  definition { forward (->), reverse (<-), equilibrium (<=>), resonance (<->). }
+  forward {}
+  reverse {}
+  equilibrium {}
+  resonance {}
+}
+
+class ReactionConditions {
+  definition { Text carried over/under the reaction arrow. }
+  +above: String {
+    definition { Text above the arrow, e.g. the catalyst [Fe]. }
+  }
+  +below: String {
+    definition { Text below the arrow, e.g. the temperature. }
+  }
+}

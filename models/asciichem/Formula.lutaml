@@ -1,0 +1,13 @@
+class Formula {
+  definition {
+    The document root of a parsed AsciiChem input: an ordered
+    sequence of top-level nodes. Every implementation emits this as
+    the canonical wire form's root.
+  }
+  +nodes: Node[0..*] {
+    definition {
+      Top-level nodes: molecules, reactions, cascades, groups,
+      electron configurations, embedded math, or text.
+    }
+  }
+}
