@@ -1,0 +1,6 @@
+class ReactionCascade {
+  definition { Two or more reactions chained together (A -> B -> C). }
+  +steps: Reaction[2..*] {
+    definition { The chained reactions, in order. }
+  }
+}

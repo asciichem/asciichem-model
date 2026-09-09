@@ -24,7 +24,7 @@ RSpec.describe "asciichem-model schemas" do
     schema_files.each do |path|
       schema = YAML.safe_load_file(path)
       expect(schema).to be_a(Hash), path
-      expect(schema["$id"]).to match(%r{asciichem-model/v1/\w+\z}), path
+      expect(schema["$id"]).to match(%r{asciichem-model/v1/[\w-]+\z}), path
       expect(schema["title"]).to be_a(String), path
       expect(schema["type"]).to eq("object"), path
     end
@@ -59,8 +59,8 @@ RSpec.describe "asciichem-model schemas" do
   it "lutaml definitions exist for every shipped schema" do
     schema_files.each do |path|
       name = File.basename(path, ".yaml")
-      lutaml = File.join(AsciiChemModel.root, "models", "asciichem",
-                         "#{name.capitalize}.lutaml")
+      camel = name.split("-").map(&:capitalize).join
+      lutaml = File.join(AsciiChemModel.root, "models", "asciichem", "#{camel}.lutaml")
       expect(File.exist?(lutaml)).to be(true), "missing #{lutaml}"
     end
   end

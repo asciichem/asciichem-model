@@ -1,0 +1,30 @@
+%YAML 1.2
+---
+$id: "https://github.com/asciichem/asciichem-model/v1/formula"
+title: AsciiChem Formula node (document root)
+description: |
+  The root of a parsed AsciiChem document: an ordered sequence of
+  top-level nodes. This is the canonical wire form every
+  implementation emits under the envelope's `root` key.
+type: object
+required: [type, nodes]
+properties:
+  type:
+    const: formula
+  nodes:
+    type: array
+    description: |
+      Top-level nodes. Items reference the shipped node schemas;
+      node types not yet shipped (electron-configuration,
+      embedded-math, text, name, mechanism, spectrum, crystal,
+      zmatrix, calculation) are TODO.impl/30 and referenced loosely
+      until their schemas land.
+    items:
+      anyOf:
+        - $ref: "atom.yaml"
+        - $ref: "molecule.yaml"
+        - $ref: "group.yaml"
+        - $ref: "reaction.yaml"
+        - $ref: "reaction-cascade.yaml"
+        - $ref: "identifier.yaml"
+additionalProperties: false
