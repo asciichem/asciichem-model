@@ -5,4 +5,8 @@ export interface Atom {
   readonly isotope?: string;
   readonly charge?: string;
   readonly subscript?: string;
+  readonly oxidationState?: string;
+  readonly lonePairs?: number;
+  readonly radicalElectrons?: number;
+  readonly ringClosures?: string;
 }

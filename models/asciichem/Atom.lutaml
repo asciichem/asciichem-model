@@ -26,4 +26,24 @@ class Atom {
       Subscript multiplicity (e.g. "2" in `H_2O`).
     }
   }
+  +oxidationState: String {
+    definition {
+      Oxidation state annotation ("II" in Ca^(II)).
+    }
+  }
+  +lonePairs: Integer {
+    definition {
+      Lewis lone-pair markers ("::O" carries 2).
+    }
+  }
+  +radicalElectrons: Integer {
+    definition {
+      Radical-electron markers ("N." carries 1).
+    }
+  }
+  +ringClosures: String {
+    definition {
+      SMILES-style ring closure digits ("1" in C1...C1).
+    }
+  }
 }
