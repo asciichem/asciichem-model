@@ -27,4 +27,19 @@ properties:
     type: string
     pattern: "^\\d+$"
     description: Subscript multiplicity ("2" in H_2O).
+  oxidationState:
+    type: string
+    description: Oxidation state annotation ("II" in Ca^(II)).
+  lonePairs:
+    type: integer
+    minimum: 0
+    description: Lewis lone-pair markers ("::O" carries 2).
+  radicalElectrons:
+    type: integer
+    minimum: 0
+    description: Radical-electron markers ("N." carries 1).
+  ringClosures:
+    type: string
+    pattern: "^\\d+$|^(\\d)+$"
+    description: SMILES-style ring closure digits ("1" in C1...C1).
 additionalProperties: false
