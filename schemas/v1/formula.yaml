@@ -14,17 +14,26 @@ properties:
   nodes:
     type: array
     description: |
-      Top-level nodes. Items reference the shipped node schemas;
-      node types not yet shipped (electron-configuration,
-      embedded-math, text, name, mechanism, spectrum, crystal,
-      zmatrix, calculation) are TODO.impl/30 and referenced loosely
-      until their schemas land.
+      Top-level nodes — mirrors the reference grammar's node rule:
+      reactions, cascades, electron configurations, crystals,
+      spectra, calculations, z-matrices, mechanisms, (annotated)
+      molecules, groups, atoms, embedded math, and text.
     items:
       anyOf:
         - $ref: "atom.yaml"
         - $ref: "molecule.yaml"
         - $ref: "group.yaml"
+        - $ref: "bond.yaml"
         - $ref: "reaction.yaml"
         - $ref: "reaction-cascade.yaml"
+        - $ref: "electron-configuration.yaml"
+        - $ref: "embedded-math.yaml"
+        - $ref: "text.yaml"
+        - $ref: "name.yaml"
         - $ref: "identifier.yaml"
+        - $ref: "mechanism.yaml"
+        - $ref: "spectrum.yaml"
+        - $ref: "crystal.yaml"
+        - $ref: "zmatrix.yaml"
+        - $ref: "calculation.yaml"
 additionalProperties: false

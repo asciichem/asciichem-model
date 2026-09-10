@@ -12,9 +12,13 @@ properties:
     const: molecule
   nodes:
     type: array
-    description: Ordered child nodes (atoms, groups, nested molecules).
+    description: Ordered child nodes (atoms, bonds, groups, nested molecules).
     items:
-      $ref: "atom.yaml"
+      anyOf:
+        - $ref: "atom.yaml"
+        - $ref: "bond.yaml"
+        - $ref: "group.yaml"
+        - $ref: "molecule.yaml"
     minItems: 1
   coefficient:
     type: string
