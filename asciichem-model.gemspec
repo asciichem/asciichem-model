@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["README.adoc", "LICENSE", "exe/*", "lib/**/*.rb",
                    "models/**/*.lutaml", "schemas/**/*.yaml",
-                   "schemas/**/*.ts", "docs/**/*.adoc"].freeze
+                   "schemas/**/*.ts", "docs/**/*.adoc"]
   spec.bindir = "exe"
   spec.executables = ["generate-types-from-schemas"]
   spec.require_paths = ["lib"]
