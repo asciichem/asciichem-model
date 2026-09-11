@@ -25,7 +25,7 @@ RSpec.describe AsciiChemModel::SchemaTypeGenerator do
     expect(identifier).to include('"cas" | "inchi" | "inchikey" | "smiles"')
 
     molecule = File.read(output_dir.join("molecule.ts"))
-    expect(molecule).to include("(Atom | Bond | Group | Molecule)[]")
+    expect(molecule).to include("(Molecule | Group | Bond | Atom)[]")
     expect(molecule).to include("Identifier[]")
   end
 

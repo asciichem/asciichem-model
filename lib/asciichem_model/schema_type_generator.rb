@@ -113,10 +113,21 @@ module AsciiChemModel
       items = prop["items"]
       inner = if items.key?("anyOf")
                 "(#{items["anyOf"].map { |sub| ts_type(sub, scope) }.uniq.join(" | ")})"
+              elsif items.key?("if")
+                "(#{ladder_refs(items).uniq.join(" | ")})"
               else
                 ts_type(items, scope)
               end
       "#{inner}[]"
+    end
+
+    # if/then/else discriminator ladders: collect the $ref of each
+    # then-branch plus the terminal else $ref.
+    def ladder_refs(items)
+      return [ts_ref(items["$ref"], nil)] if items.key?("$ref")
+
+      refs = [ts_ref(items["then"]["$ref"], nil)]
+      refs.concat(items.key?("else") ? ladder_refs(items["else"]) : [])
     end
 
     def ts_inline_object(prop, scope)

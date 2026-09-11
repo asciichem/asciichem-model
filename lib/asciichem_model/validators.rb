@@ -24,12 +24,23 @@ module AsciiChemModel
         end
       end
 
+      # Sibling schemas are loaded exactly once and the SAME object is
+      # returned for every $ref resolution. json_schemer retains one
+      # compiled subschema per resolved object; returning a fresh
+      # YAML.load per lookup made retention grow with every
+      # validation x ref hit (gigabytes on corpus-scale runs).
+      def loaded_schema(basename)
+        @loaded_schemas ||= {}
+        @loaded_schemas[basename] ||= YAML.safe_load_file(schema_file(basename))
+      end
+
       def schema_names
         schemers.keys.sort
       end
 
       def schema_file(name)
-        File.join(SCHEMAS_DIR, "#{name}.yaml")
+        base = name.end_with?(".yaml") ? name : "#{name}.yaml"
+        File.join(SCHEMAS_DIR, base)
       end
 
       # Validates a wire-form node hash against its node schema
@@ -69,8 +80,8 @@ module AsciiChemModel
       # Sibling-file $refs ("atom.yaml") resolve against the schemas
       # directory; external pointers are not supported by design.
       def resolve_ref(uri)
-        candidate = File.join(SCHEMAS_DIR, File.basename(uri.to_s))
-        return YAML.safe_load_file(candidate) if File.exist?(candidate)
+        basename = File.basename(uri.to_s)
+        return loaded_schema(basename) if File.exist?(schema_file(basename))
 
         raise KeyError, "unresolvable $ref #{uri} (only sibling schema files are supported)"
       end
