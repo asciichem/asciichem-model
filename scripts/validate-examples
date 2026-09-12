@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "json_schemer"
+require "yaml"
+
+SCHEMAS = Dir[File.expand_path("../schemas/v1/*.yaml", __dir__)].sort
+loaded = {}
+schemers = SCHEMAS.to_h do |path|
+  resolver = ->(uri) do
+    base = File.basename(uri.to_s)
+    loaded[base] ||= YAML.safe_load_file(File.expand_path("../schemas/v1/#{base}", __dir__))
+  end
+  [File.basename(path, ".yaml"), JSONSchemer.schema(YAML.safe_load_file(path), ref_resolver: resolver)]
+end
+
+failures = []
+Dir[File.expand_path("../schemas/v1/examples/*.yaml", __dir__)].sort.each do |path|
+  data = YAML.safe_load_file(path)
+  type = data.fetch("type")
+  errors = schemers.fetch(type.tr("_", "-")).validate(data).map(&:to_s)
+  negative = File.basename(path).start_with?("99-")
+  ok = negative ? errors.any? : errors.empty?
+  failures << "#{File.basename(path)}: #{errors.join('; ')}" unless ok
+end
+
+if failures.empty?
+  puts "OK: all examples validate"
+else
+  failures.each { |f| warn f }
+  exit 1
+end
