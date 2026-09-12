@@ -11,7 +11,8 @@ class Bond {
 enum BondKind {
   definition {
     single (-), double (=), triple (#), quadruple (##), wedge (>-),
-    hash (-<), dative (~>), wavy (~~).
+    hash (-<), dative (~>), wavy (~~), aromatic (: — SMILES/molfile
+    aromatic bonds).
   }
   single {}
   double {}
@@ -21,4 +22,5 @@ enum BondKind {
   hash {}
   dative {}
   wavy {}
+  aromatic {}
 }
