@@ -93,6 +93,7 @@ module AsciiChemModel
       case prop["type"]
       when "number" then "number"
       when "integer" then "number"
+      when "boolean" then "boolean"
       else "string"
       end
     end
