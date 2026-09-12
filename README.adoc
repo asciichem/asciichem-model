@@ -1,80 +1,49 @@
-= AsciiChem Semantic Model
+= asciichem-model
 
-== General
+The AsciiChem contract repository: the implementation-independent
+semantic model shared by every implementation.
 
-This repository defines the **normative semantic model** for the
-AsciiChem ecosystem: what a parsed chemical *means*, independent of any
-implementation language. Every implementation —
-https://github.com/asciichem/asciichem-ruby[asciichem-ruby] (reference),
-the planned TypeScript and Python APIs, any future Rust core — consumes
-these definitions and conforms to the shared corpus in
-`asciichem-tests`.
-
-The architecture follows the proven
-https://github.com/glossarist/concept-model[glossarist concept-model]
-pattern: LutaML model definitions as the normative source, versioned
-JSON Schemas as the machine-checkable form, numbered examples (positive
-and negative) that seed the conformance corpus, and generated types for
-downstream languages.
-
-The canonical serialisation is a JSON wire form with a node `type`
-discriminator; every implementation must parse and emit it. Identifier
-conventions (CAS RN, InChI, InChIKey, SMILES, …) carry format
-constraints and provenance so that substance identity — validate,
-resolve, cite — is first-class.
+[IMPORTANT]
+====
+This repository is NOT a rubygem. The Ruby runtime model lives in
+the https://github.com/asciichem/asciichem-ruby[asciichem gem]
+(`AsciiChem::Model::*`); the TypeScript implementation vendors the
+generated types. This repository is the source of truth — LUTAML
+model definitions, versioned JSON Schemas, examples, and the
+generated types — documented on
+https://asciichem.org/models/[asciichem.org/models].
+====
 
 == Layout
 
 [cols="1,3"]
 |===
-|Path |Contents
-
-|`models/asciichem/*.lutaml` |Normative LutaML class/data-type definitions
-|`schemas/v1/*.yaml` |JSON Schema (draft 2020-12) in YAML, one per node type, repo-pinned `$id`
-|`schemas/v1/examples/` |Numbered instance examples (positive now; negative-examples validator lands with the generator work)
-|`lib/` |Gem packaging: schema self-checks and the schema→TypeScript type generator
-|`docs/adr/` |Architecture decision records
+|`models/asciichem/*.lutaml` | LUTAML class definitions (the authoring form)
+|`schemas/v1/*.yaml` | JSON Schemas (draft 2020-12), one per node type, repo-pinned `$id`s
+|`schemas/v1/examples/` | Numbered positive examples + `99-*` must-reject negatives
+|`schemas/v1/types/` | Generated TypeScript types (never edit by hand)
+|`scripts/` | Maintainer tooling: type generator, example validator
 |===
 
-== Status
+== Maintainer tooling
 
-Scaffold (2026-09-09): seed schemas for `atom`, `molecule`,
-`identifier`. The full node inventory (`formula`, `group`, `bond`,
-`reaction`, … plus the identity model `provenance`/`substance-record`)
-is tracked in the ecosystem backlog
-(`asciichem.github.io/TODO.impl/30`, `31`, `32`).
+....
+bundle install
+bundle exec scripts/generate-types-from-schemas   # regenerate TS types
+bundle exec scripts/validate-examples             # validate examples against schemas
+....
 
-== Versioning and releases
+CI runs both and fails on drift. Consumers vendor from tags: the gem
+checks in `spec/schemas` (refreshed by
+`scripts/update-model-schemas.sh`), asciichem-ts vendors the types
+(`scripts/update-model-types.sh`).
 
-This repo follows semantic versioning. Consumers (asciichem-ruby,
-asciichem-ts, asciichem-py) vendor or depend on the artifacts and pin
-to tags.
+== Versioning
 
-[cols="1,3",options="header"]
-|===
-|Bump |When
+Additive changes bump the patch line within v1; adding a bond kind is
+a minor bump (the enum is a closed contract). Breaking changes open a
+`v2` directory and never mutate v1.
 
-|MAJOR (vN+1.0.0)
-|Removed or renamed shape, class, property, prefix binding, or enum value
-
-|MINOR (vN.N+1.0)
-|New shapes, classes, properties, enum values; backward-compatible additive
-
-|PATCH (vN.N.N+1)
-|Shape bug fixes, doc/comment-only changes, example updates
-|===
-
-The model version appears in the wire form root
-(`"modelVersion": "1.x"`). Breaking model changes are gated here, not
-in each implementation.
-
-== Consumer protocol
-
-- **Ruby** (asciichem-ruby): depends on the `asciichem-model` gem;
-  model classes serialise via `lutaml-model` mappings against the
-  schemas — never hand-rolled `to_h`.
-- **TypeScript/JS** (asciichem-ts): vendors `schemas/` via a
-  `sync-asciichem-model` script pinned to a git tag; types are
-  generated from the schemas (single source of truth → typed output).
-- **Python** (asciichem-py): consumes the schemas directly or via
-  generated dataclasses.
+Historical note: this repository shipped as the `asciichem-model`
+rubygem through 0.3.4 (validators for Ruby consumers); 2026-09-12 it
+became a pure contract repository (TODO.impl 59).

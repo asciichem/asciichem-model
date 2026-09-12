@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../lib/schema_type_generator"
+
+exit SchemaTypes::SchemaTypeGenerator.new(check_mode: ARGV.include?("--check")).run

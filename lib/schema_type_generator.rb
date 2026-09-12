@@ -3,7 +3,7 @@
 require "pathname"
 require "yaml"
 
-module AsciiChemModel
+module SchemaTypes
   # Emits TypeScript interfaces from the v1 JSON Schemas — single
   # source of truth (schemas) → typed output for downstream TS
   # consumers. Glossarist's concept-model generator is the
@@ -15,7 +15,8 @@ module AsciiChemModel
   # types). `check_mode` compares against committed output so CI
   # fails on drift.
   class SchemaTypeGenerator
-    SCHEMAS_DIR = Pathname.new(File.join(AsciiChemModel.root, "schemas", "v1"))
+    ROOT = File.expand_path("..", __dir__)
+    SCHEMAS_DIR = Pathname.new(File.join(ROOT, "schemas", "v1"))
     OUTPUT_DIR = SCHEMAS_DIR.join("types")
 
     # Schema basenames whose model class spelling differs from the

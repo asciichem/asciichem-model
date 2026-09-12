@@ -1,23 +1,22 @@
-name: CI
+name: contract
 
 on:
+  pull_request:
   push:
     branches: [main]
-  pull_request:
 
 jobs:
-  spec:
+  check:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby: ["3.3", "3.4"]
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ matrix.ruby }}
+          ruby-version: "3.4"
           bundler-cache: true
-      - name: Run specs
-        run: bundle exec rspec --format progress
-      - name: Check generated types are fresh
-        run: bundle exec rake generate:types:check
+      - name: Generated types are current
+        run: |
+          cp -r schemas/v1/types /tmp/types-before
+          bundle exec scripts/generate-types-from-schemas
+          diff -r /tmp/types-before schemas/v1/types
+      - run: bundle exec scripts/validate-examples
