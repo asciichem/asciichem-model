@@ -42,4 +42,16 @@ properties:
     type: string
     pattern: "^\\d+$|^(\\d)+$"
     description: SMILES-style ring closure digits ("1" in C1...C1).
+  aromatic:
+    type: boolean
+    description: |
+      Aromatic atom flag, set by SMILES lowercase input (c1ccccc1)
+      or molfile aromatic contexts. Absent means not aromatic.
+  hydrogens:
+    type: integer
+    minimum: 0
+    description: |
+      Implicit hydrogen count as stated by the source (SMILES bracket
+      atoms [CH4]/[nH], molfile atom-block H counts). Absent means
+      "per valence rules" — never invented.
 additionalProperties: false

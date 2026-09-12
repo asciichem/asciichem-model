@@ -13,8 +13,9 @@ properties:
     const: bond
   kind:
     default: single
-    enum: [single, double, triple, quadruple, wedge, hash, dative, wavy]
+    enum: [single, double, triple, quadruple, wedge, hash, dative, wavy, aromatic]
     description: |
       single (-), double (=), triple (#), quadruple (##), wedge (>-),
-      hash (-<), dative (~>), wavy (~~).
+      hash (-<), dative (~>), wavy (~~), aromatic (SMILES/molfile
+      aromatic bonds).
 additionalProperties: false

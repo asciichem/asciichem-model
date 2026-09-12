@@ -9,4 +9,6 @@ export interface Atom {
   readonly lonePairs?: number;
   readonly radicalElectrons?: number;
   readonly ringClosures?: string;
+  readonly aromatic?: boolean;
+  readonly hydrogens?: number;
 }
