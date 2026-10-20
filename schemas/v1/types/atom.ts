@@ -11,4 +11,5 @@ export interface Atom {
   readonly ringClosures?: string;
   readonly aromatic?: boolean;
   readonly hydrogens?: number;
+  readonly chirality?: "TH1" | "TH2";
 }

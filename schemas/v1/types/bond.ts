@@ -2,4 +2,5 @@
 export interface Bond {
   readonly type: "bond";
   readonly kind?: "single" | "double" | "triple" | "quadruple" | "wedge" | "hash" | "dative" | "wavy" | "aromatic";
+  readonly direction?: "up" | "down";
 }
