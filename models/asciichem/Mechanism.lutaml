@@ -18,5 +18,18 @@ class Mechanism {
     +reaction: Reaction {
       definition { The step's reaction. }
     }
+    +flows: MechanismFlow[0..*] {
+      definition { Electron-flow markers drawn for this step. }
+    }
+  }
+
+  class MechanismFlow {
+    definition { One electron-flow marker: arrow source to target. }
+    +source: String {
+      definition { A bond or species the arrow starts at, verbatim. }
+    }
+    +target: String {
+      definition { What the arrow points to, verbatim. }
+    }
   }
 }
