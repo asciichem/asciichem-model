@@ -4,5 +4,6 @@ export interface Molecule {
   readonly nodes: (Molecule | Group | Bond | Atom)[];
   readonly coefficient?: string;
   readonly stereo?: "R" | "S" | "E" | "Z" | "alpha" | "beta";
+  readonly state?: "precipitate" | "gas";
   readonly identifiers?: Identifier[];
 }
