@@ -164,5 +164,5 @@ properties:
                                     then:
                                       "$ref": adduct.yaml
                                     else:
-                                    "$ref": calculation.yaml
+                                        "$ref": calculation.yaml
 additionalProperties: false
