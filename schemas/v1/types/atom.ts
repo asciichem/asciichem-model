@@ -3,6 +3,7 @@ export interface Atom {
   readonly type: "atom";
   readonly element: string;
   readonly isotope?: string;
+  readonly atomicNumber?: string;
   readonly charge?: string;
   readonly subscript?: string;
   readonly oxidationState?: string;
