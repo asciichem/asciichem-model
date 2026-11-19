@@ -1,5 +1,6 @@
 // Union of every node type in the v1 model.
 export type Node =
+  | Adduct
   | Atom
   | Bond
   | Calculation
