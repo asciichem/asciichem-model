@@ -1,0 +1,16 @@
+# 13 — Reaction with a donation arrow
+
+# `A <=>+ B`: the equilibrium arrow carrying mhchem's electron-pair
+# donation marker (`<=>-` is the removal form).
+type: reaction
+arrow: donation
+reactants:
+  - type: molecule
+    nodes:
+      - type: atom
+        element: A
+products:
+  - type: molecule
+    nodes:
+      - type: atom
+        element: B
