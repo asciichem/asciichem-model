@@ -1,0 +1,10 @@
+# 14 — Molecule with a phase
+
+# `NaCl(aq)`: the tight parenthesised mhchem spelling.
+type: molecule
+phase: aqueous
+nodes:
+  - type: atom
+    element: Na
+  - type: atom
+    element: Cl
