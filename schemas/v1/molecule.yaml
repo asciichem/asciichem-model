@@ -74,7 +74,7 @@ properties:
     - solid
     - gas
     description: The molecule-level phase (grammar v0.11.0) — the tight
-      parenthesised mhchem spelling: aqueous (`NaCl(aq)`), liquid
+      parenthesised mhchem spelling — aqueous (`NaCl(aq)`), liquid
       (`H_2O(l)`), solid (`Fe(s)`), gas (`CO_2(g)`). Collision-free by
       case against the group reading. Additive per the v1 additive rule.
   identifiers:
